@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aura Skincare · Aria, AI Voice Support</title>
+  <!-- Relative paths so this works whether static/ is mounted at "/" or "/static" -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Error banner (unsupported browser / mic denied / backend down) ── -->
+  <div id="errorBanner" class="error-banner" role="alert" hidden>
+    <span id="errorText"></span>
+    <button id="errorClose" class="error-close" type="button" aria-label="Dismiss message">&times;</button>
+  </div>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <h1>Aura Skincare</h1>
+        <p class="brand-sub">Aria · AI Voice Support</p>
+      </div>
+    </div>
+    <p class="hint">Use Chrome or Edge, and allow microphone access.</p>
+  </header>
+
+  <main class="layout">
+
+    <!-- ── Left column: call controls + live transcript ── -->
+    <section class="col-main">
+
+      <div class="card call-card">
+        <div class="call-controls">
+          <button id="startBtn" class="btn btn-primary" type="button">Start Call</button>
+          <button id="endBtn" class="btn btn-ghost" type="button" disabled>End Call</button>
+        </div>
+
+        <div id="stateBadge" class="state-badge state-idle" role="status" aria-live="polite">
+          <span class="orb" aria-hidden="true"></span>
+          <span id="stateLabel">Idle</span>
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Live transcript</h2>
+        <div id="liveTranscript" class="transcript" aria-live="polite"></div>
+      </div>
+
+    </section>
+
+    <!-- ── Right column: test orders + hints ── -->
+    <aside class="col-side">
+
+      <div class="card">
+        <h2>Test orders</h2>
+        <div id="ordersCard" class="orders-wrap">
+          <p class="muted">Loading…</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Try saying</h2>
+        <ul id="hints" class="hints">
+          <li><button class="hint-btn" type="button">Where is ORD-101?</button></li>
+          <li><button class="hint-btn" type="button">Cancel ORD-103</button></li>
+          <li><button class="hint-btn" type="button">I opened it 20 days ago, can I return it?</button></li>
+          <li><button class="hint-btn" type="button">What's in the Radiance Serum?</button></li>
+          <li><button class="hint-btn" type="button">Book me a flight to Goa</button></li>
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- ── Post-call panel (hidden until End Call) ── -->
+    <section id="summaryPanel" class="card summary-panel" hidden>
+      <h2>Call summary</h2>
+
+      <h3>Transcript</h3>
+      <div id="summaryTranscript" class="transcript transcript-static"></div>
+
+      <h3>Outcome JSON</h3>
+      <pre id="outcomeJson" class="json-panel"></pre>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
